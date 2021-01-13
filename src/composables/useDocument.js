@@ -22,7 +22,22 @@ const useDocument = (collection, id)=>{
         }
     }
 
-    return { error , isPending , deleteDoc }
+    const updateDoc = async(updates)=>{
+        isPending.value = true
+        error.value = null
+        try{
+            const res = docRef.update(updates)
+            isPending.valuefalse
+            return res
+        }catch(err){
+
+            error.value = 'Could not Update the Playlist'
+            console.log(err.message)
+            isPending.value = false
+        }
+    }
+
+    return { error , isPending , deleteDoc, updateDoc }
 }
 
 

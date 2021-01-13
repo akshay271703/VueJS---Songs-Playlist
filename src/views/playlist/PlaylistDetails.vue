@@ -15,7 +15,17 @@
             <button v-if="ownership" @click="deletePlaylist">Delete</button>
         </div>
         <div class="song-list">
-            <p>Song List Here</p>
+            <div v-if="!document.songs.length">No Songs have been added yet</div>
+            <div v-else>
+                <div v-for="songs in document.songs" :key="songs.id" class="single-song">
+                    <div class="details">
+                        <h3>{{ songs.title }}</h3>
+                        <p>{{ songs.artist }}</p>
+                    </div>
+                    <button v-if="ownership">Delete</button>
+                </div>
+            </div>
+            <AddSong v-if="ownership" :playlist="document" />
         </div>
     </div>
 </template>
@@ -27,7 +37,9 @@ import getUser from '../../composables/getUser.js'
 import useDocument from '../../composables/useDocument.js'
 import useStorage from '../../composables/useStorage.js'
 import { useRouter } from 'vue-router'
+import AddSong from '../../components/AddSong.vue'
 export default {
+    components : { AddSong },
     props : ['id'],
     setup(props){
         const router = useRouter()
@@ -49,7 +61,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .playlist-details {
         display: grid;
         grid-template-columns: 1fr 2fr;
@@ -79,5 +91,13 @@ export default {
     }
     .description {
         text-align: left;
+    }
+    .single-song{
+        padding: 10px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom:1px dashed #ccc;
+        margin-bottom: 20px;
     }
 </style>

@@ -12,17 +12,20 @@
 
 <script>
 import { ref } from 'vue'
+import useStorage from '@/composables/useStorage'
 export default {
     setup(){
         const title = ref('')
         const description = ref('')
         const file = ref(null)
         const fileError = ref(null)
-        //Allowed FIle Upload Types
-        const fileTypes = ['images/jpeg','image/png']
-        const createPlaylist = ()=>{
+        const {url, filePath, fileUpload} = useStorage()
+
+        const createPlaylist = async ()=>{
             if(file.value){
-                console.log(file.value)
+                await fileUpload(file.value)
+                console.log('Image Upload Successful')
+                console.log(url.value)
             }
         }
         const handleChange = (e)=>{

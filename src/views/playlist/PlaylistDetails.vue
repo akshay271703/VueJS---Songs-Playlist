@@ -12,6 +12,7 @@
             <div class="description">
                 <p>{{ document.description }}</p>
             </div>
+            <button v-if="ownership">Delete</button>
         </div>
         <div class="song-list">
             <p>Song List Here</p>
@@ -20,13 +21,20 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import getDocument from '../../composables/getDocument.js'
+import getUser from '../../composables/getUser.js'
 export default {
     props : ['id'],
     setup(props){
         const { error, document } = getDocument('playlists', props.id)
+        const { user } = getUser()
 
-        return { error , document }
+        const ownership = computed( ()=>{
+            return ( document.value && (user.value) && (user.value.uid === document.value.userID) )
+        })
+
+        return { error, document, ownership}
     }
 }
 </script>

@@ -13,6 +13,7 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import useStorage from '@/composables/useStorage'
 import useCollection from '@/composables/useCollection'
 import getUser from '@/composables/getUser'
@@ -20,6 +21,7 @@ import { timestamp } from '../../../data/firebase/config'
 
 export default {
     setup(){
+        const router = useRouter()
         const title = ref('')
         const description = ref('')
         const file = ref(null)
@@ -32,7 +34,7 @@ export default {
             if(file.value){
                 isPending.value = true
                 await fileUpload(file.value)
-                await addDoc({
+                const res = await addDoc({
                     title : title.value,
                     description : description.value,
                     cover : url.value,
@@ -43,6 +45,7 @@ export default {
                     createdAt : timestamp()
                 })
                 isPending.value = false
+                router.push( { name : 'PlaylistDetails', params : { id : res.id}})
             }
         }
 

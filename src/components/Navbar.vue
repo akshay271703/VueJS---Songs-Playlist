@@ -1,14 +1,21 @@
 <template>
-  <div class="navbar">
-      <nav>
-          <h1><router-link :to="{ name : 'Home' }">D3 Playlist</router-link></h1>
-          <div class="links">
-              <button @click="handleLogout" v-if="user">Log Out</button>
-              <router-link class="btn" :to="{ name : 'Signup' }" v-if="!user">Sign Up</router-link>
-              <router-link class="btn" :to="{ name : 'Login' }"  v-if="!user">Log In</router-link>
-          </div>
-      </nav>
-  </div>
+<div class="navbar">
+    <nav>
+        <h1><router-link :to="{ name : 'Home' }">D3 Playlist</router-link></h1>
+        <div class="links">
+            <div v-if="user">
+                <router-link class="btn" :to="{ name : 'CreatePlaylist' }">Add Playlist</router-link>
+                <button @click="handleLogout" v-if="user">Log Out</button>
+            </div>
+            <div v-else>
+                <router-link class="btn" :to="{ name : 'Signup' }" >Sign Up</router-link>
+                <router-link class="btn" :to="{ name : 'Login' }"  >Log In</router-link>
+            </div>
+            
+            
+        </div>
+    </nav>
+</div>
 </template>
 
 <script>

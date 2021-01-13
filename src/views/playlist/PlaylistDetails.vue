@@ -25,18 +25,24 @@ import { computed } from 'vue'
 import getDocument from '../../composables/getDocument.js'
 import getUser from '../../composables/getUser.js'
 import useDocument from '../../composables/useDocument.js'
+import useStorage from '../../composables/useStorage.js'
+import { useRouter } from 'vue-router'
 export default {
     props : ['id'],
     setup(props){
+        const router = useRouter()
         const { error, document } = getDocument('playlists', props.id)
         const { user } = getUser()
         const { deleteDoc } = useDocument('playlists' , props.id)
+        const { deleteImage } = useStorage()
         const ownership = computed( ()=>{
             return ( document.value && (user.value) && (user.value.uid === document.value.userID) )
         })
 
         const deletePlaylist = async()=>{
+            await deleteImage(document.value.filePath)
             await deleteDoc()
+            router.push({ name : 'Home'})
         }
         return { error, document, ownership, deletePlaylist}
     }

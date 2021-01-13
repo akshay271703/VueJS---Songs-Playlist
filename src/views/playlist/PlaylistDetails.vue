@@ -12,7 +12,7 @@
             <div class="description">
                 <p>{{ document.description }}</p>
             </div>
-            <button v-if="ownership">Delete</button>
+            <button v-if="ownership" @click="deletePlaylist">Delete</button>
         </div>
         <div class="song-list">
             <p>Song List Here</p>
@@ -24,17 +24,21 @@
 import { computed } from 'vue'
 import getDocument from '../../composables/getDocument.js'
 import getUser from '../../composables/getUser.js'
+import useDocument from '../../composables/useDocument.js'
 export default {
     props : ['id'],
     setup(props){
         const { error, document } = getDocument('playlists', props.id)
         const { user } = getUser()
-
+        const { deleteDoc } = useDocument('playlists' , props.id)
         const ownership = computed( ()=>{
             return ( document.value && (user.value) && (user.value.uid === document.value.userID) )
         })
 
-        return { error, document, ownership}
+        const deletePlaylist = async()=>{
+            await deleteDoc()
+        }
+        return { error, document, ownership, deletePlaylist}
     }
 }
 </script>

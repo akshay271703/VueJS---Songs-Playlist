@@ -45,7 +45,7 @@ const routes = [
     name: 'PlaylistDetails',
     component: PlaylistDetails,
     beforeEnter : requireAuth,
-    props :true
+    props : true
   }
 ]
 

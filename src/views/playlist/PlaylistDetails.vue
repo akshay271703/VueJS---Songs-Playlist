@@ -113,4 +113,11 @@ export default {
         border-bottom:1px dashed #ccc;
         margin-bottom: 20px;
     }
+    @media (max-width:700px){
+        .playlist-details {
+            display: grid;
+            grid-template-columns: 100%;
+            text-align: center;
+        }
+    }
 </style>

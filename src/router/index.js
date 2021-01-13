@@ -4,6 +4,7 @@ import Login from '../views/auth/Login.vue'
 import Signup from '../views/auth/Signup.vue'
 import CreatePlaylist from '../views/playlist/CreatePlaylist.vue'
 import PlaylistDetails from '../views/playlist/PlaylistDetails.vue'
+import UserPlaylist from '../views/playlist/UserPlaylist.vue'
 
 //Route Guard
 
@@ -44,6 +45,13 @@ const routes = [
     path: '/playlist/:id',
     name: 'PlaylistDetails',
     component: PlaylistDetails,
+    beforeEnter : requireAuth,
+    props : true
+  },
+  {
+    path: '/playlist/user',
+    name: 'UserPlaylist',
+    component: UserPlaylist,
     beforeEnter : requireAuth,
     props : true
   }
